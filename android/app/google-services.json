@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "760398595098",
+    "project_id": "flutter-sport-enthusiast",
+    "storage_bucket": "flutter-sport-enthusiast.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:760398595098:android:05ca6d02af0f4071affda3",
+        "android_client_info": {
+          "package_name": "com.example.flutter_sport_enthusiast"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "760398595098-3k4bib53al1fhvus1j2vaq0e1bs62tgm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBYZ189wS8DdVNy50tKU2nSkoQfcNUKH4s"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "760398595098-3k4bib53al1fhvus1j2vaq0e1bs62tgm.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
