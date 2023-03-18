@@ -27,7 +27,7 @@ class _PhoneAuthPageState extends State<PhoneAuthPage> {
       backgroundColor: Colors.black87,
       appBar: AppBar(
         backgroundColor: Colors.black87,
-        title: Text(
+        title: const Text(
           "SignUp",
           style: TextStyle(color: Colors.white, fontSize: 24),
         ),
@@ -39,11 +39,11 @@ class _PhoneAuthPageState extends State<PhoneAuthPage> {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              SizedBox(
+              const SizedBox(
                 height: 120,
               ),
               textField(),
-              SizedBox(
+              const SizedBox(
                 height: 30,
               ),
               Container(
@@ -57,7 +57,7 @@ class _PhoneAuthPageState extends State<PhoneAuthPage> {
                         margin: EdgeInsets.symmetric(horizontal: 12),
                       ),
                     ),
-                    Text(
+                    const Text(
                       "Enter 6 digit OTP",
                       style: TextStyle(fontSize: 16, color: Colors.white),
                     ),
@@ -71,11 +71,11 @@ class _PhoneAuthPageState extends State<PhoneAuthPage> {
                   ],
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 30,
               ),
               otpField(),
-              SizedBox(
+              const SizedBox(
                 height: 40,
               ),
               RichText(
