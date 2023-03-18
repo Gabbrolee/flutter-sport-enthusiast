@@ -9,7 +9,7 @@ import 'package:firebase_auth/firebase_auth.dart' as firebase_auth;
 import 'VerifyPage.dart';
 
 class SignUpPage extends StatefulWidget {
-  SignUpPage({Key? key}) : super(key: key);
+  const SignUpPage({Key? key}) : super(key: key);
 
   @override
   _SignUpPageState createState() => _SignUpPageState();
@@ -17,8 +17,8 @@ class SignUpPage extends StatefulWidget {
 
 class _SignUpPageState extends State<SignUpPage> {
   firebase_auth.FirebaseAuth firebaseAuth = firebase_auth.FirebaseAuth.instance;
-  TextEditingController _emailController = TextEditingController();
-  TextEditingController _pwdController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _pwdController = TextEditingController();
   bool circular = false;
   AuthClass authClass = AuthClass();
 
@@ -41,7 +41,7 @@ class _SignUpPageState extends State<SignUpPage> {
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 20,
               ),
               buttonItem("assets/google.svg", "Continue with Google", 25,

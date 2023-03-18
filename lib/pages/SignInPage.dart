@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter_sport_enthusiast/Service/Auth_Service.dart';
 import 'package:flutter_sport_enthusiast/pages/ForgotPwdPage.dart';
 import 'package:flutter_sport_enthusiast/pages/SignUpPage.dart';
@@ -9,7 +10,7 @@ import 'HomePage.dart';
 import 'PhoneAuth.dart';
 
 class SignInPage extends StatefulWidget {
-  SignInPage({Key? key}) : super(key: key);
+  const SignInPage({Key? key}) : super(key: key);
 
   @override
   _SignInPageState createState() => _SignInPageState();
@@ -109,7 +110,7 @@ class _SignInPageState extends State<SignInPage> {
               ),
                TextButton(
                  onPressed: (){
-                  Navigator.push(context, MaterialPageRoute(builder: (context)=> ForgotPasswordPage()));
+                  Navigator.push(context, MaterialPageRoute(builder: (context)=> const ForgotPasswordPage()));
                  },
                 child: const Text(
                     "Forgot Password?",
@@ -138,10 +139,7 @@ class _SignInPageState extends State<SignInPage> {
           setState(() {
             circular = false;
           });
-          Navigator.pushAndRemoveUntil(
-              context,
-              MaterialPageRoute(builder: (builder) => HomePage()),
-              (route) => false);
+         getToHomePage();
         } catch (e) {
           final snackbar = SnackBar(content: Text(e.toString()));
           ScaffoldMessenger.of(context).showSnackBar(snackbar);
@@ -155,7 +153,7 @@ class _SignInPageState extends State<SignInPage> {
         height: 60,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(20),
-          gradient: LinearGradient(colors: [
+          gradient: const LinearGradient(colors: [
             Color(0xfffd746c),
             Color(0xffff9068),
             Color(0xfffd746c)
@@ -164,7 +162,7 @@ class _SignInPageState extends State<SignInPage> {
         child: Center(
           child: circular
               ? CircularProgressIndicator()
-              : Text(
+              : const Text(
                   "Sign In",
                   style: TextStyle(
                     color: Colors.white,
@@ -188,7 +186,7 @@ class _SignInPageState extends State<SignInPage> {
           elevation: 8,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(15),
-            side: BorderSide(
+            side: const BorderSide(
               width: 1,
               color: Colors.grey,
             ),
@@ -201,12 +199,12 @@ class _SignInPageState extends State<SignInPage> {
                 height: size,
                 width: size,
               ),
-              SizedBox(
+              const SizedBox(
                 width: 15,
               ),
               Text(
                 buttonName,
-                style: TextStyle(
+                style: const TextStyle(
                   color: Colors.white,
                   fontSize: 17,
                 ),
@@ -226,26 +224,26 @@ class _SignInPageState extends State<SignInPage> {
       child: TextFormField(
         controller: controller,
         obscureText: obscureText,
-        style: TextStyle(
+        style: const TextStyle(
           fontSize: 17,
           color: Colors.white,
         ),
         decoration: InputDecoration(
           labelText: labeltext,
-          labelStyle: TextStyle(
+          labelStyle: const TextStyle(
             fontSize: 17,
             color: Colors.white,
           ),
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(15),
-            borderSide: BorderSide(
+            borderSide: const BorderSide(
               width: 1.5,
               color: Colors.amber,
             ),
           ),
           enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(15),
-            borderSide: BorderSide(
+            borderSide: const BorderSide(
               width: 1,
               color: Colors.grey,
             ),
@@ -253,5 +251,12 @@ class _SignInPageState extends State<SignInPage> {
         ),
       ),
     );
+  }
+
+  void getToHomePage(){
+    Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(builder: (builder) => HomePage()),
+            (route) => false);
   }
 }
