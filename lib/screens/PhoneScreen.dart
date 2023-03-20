@@ -21,6 +21,7 @@ class _PhoneAuthPageState extends State<PhoneAuthPage> {
   AuthClass authClass = AuthClass();
   String verificationIdFinal = "";
   String smsCode = "";
+  String countryCode = "";
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -156,7 +157,7 @@ class _PhoneAuthPageState extends State<PhoneAuthPage> {
       textFieldAlignment: MainAxisAlignment.spaceAround,
       fieldStyle: FieldStyle.underline,
       onCompleted: (pin) {
-        print("Completed: " + pin);
+        print("Completed: $pin");
         setState(() {
           smsCode = pin;
         });
@@ -199,7 +200,7 @@ class _PhoneAuthPageState extends State<PhoneAuthPage> {
                       buttonName = "Resend";
                     });
                     await authClass.verifyPhoneNumber(
-                        "+234 ${phoneController.text}", context, setData);
+                        "$countryCode${phoneController.text}", context, setData);
                   },
             child: Padding(
               padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 15),

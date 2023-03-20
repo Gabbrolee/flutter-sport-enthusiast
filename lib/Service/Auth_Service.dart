@@ -1,11 +1,11 @@
-import 'package:flutter_sport_enthusiast/pages/HomePage.dart';
+import 'package:flutter_sport_enthusiast/screens/HomeScreen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
-import '../pages/HomePage.dart';
+import '../screens/HomeScreen.dart';
 
 class AuthClass {
   final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -30,10 +30,7 @@ class AuthClass {
         UserCredential userCredential =
             await _auth.signInWithCredential(credential);
         storeTokenAndData(userCredential);
-        Navigator.pushAndRemoveUntil(
-            context,
-            MaterialPageRoute(builder: (builder) => HomePage()),
-            (route) => false);
+
 
         final snackBar =
             SnackBar(content: Text("${userCredential.user?.displayName}"));
@@ -123,5 +120,12 @@ class AuthClass {
   void showSnackBar(BuildContext context, String text) {
     final snackBar = SnackBar(content: Text(text));
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
+  }
+
+  void goToHomePage(BuildContext context){
+        Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(builder: (builder) => HomePage()),
+            (route) => false);
   }
 }

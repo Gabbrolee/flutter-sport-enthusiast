@@ -1,21 +1,22 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter_sport_enthusiast/Service/Auth_Service.dart';
-import 'package:flutter_sport_enthusiast/pages/HomePage.dart';
-import 'package:flutter_sport_enthusiast/pages/PhoneAuth.dart';
-import 'package:flutter_sport_enthusiast/pages/SignInPage.dart';
+import 'package:flutter_sport_enthusiast/screens/ForgotPwdScreen.dart';
+import 'package:flutter_sport_enthusiast/screens/SignUpScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:firebase_auth/firebase_auth.dart' as firebase_auth;
 
-import 'VerifyPage.dart';
+import 'HomeScreen.dart';
+import 'PhoneScreen.dart';
 
-class SignUpPage extends StatefulWidget {
-  const SignUpPage({Key? key}) : super(key: key);
+class SignInPage extends StatefulWidget {
+  const SignInPage({Key? key}) : super(key: key);
 
   @override
-  _SignUpPageState createState() => _SignUpPageState();
+  _SignInPageState createState() => _SignInPageState();
 }
 
-class _SignUpPageState extends State<SignUpPage> {
+class _SignInPageState extends State<SignInPage> {
   firebase_auth.FirebaseAuth firebaseAuth = firebase_auth.FirebaseAuth.instance;
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _pwdController = TextEditingController();
@@ -34,7 +35,7 @@ class _SignUpPageState extends State<SignUpPage> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               const Text(
-                "Sign Up",
+                "Sign In",
                 style: TextStyle(
                   fontSize: 35,
                   color: Colors.white,
@@ -44,9 +45,8 @@ class _SignUpPageState extends State<SignUpPage> {
               const SizedBox(
                 height: 20,
               ),
-              buttonItem("assets/google.svg", "Continue with Google", 25,
-                  () async {
-                await authClass.googleSignIn(context);
+              buttonItem("assets/google.svg", "Continue with Google", 25, () {
+                authClass.googleSignIn(context);
               }),
               const SizedBox(
                 height: 15,
@@ -81,7 +81,7 @@ class _SignUpPageState extends State<SignUpPage> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   const Text(
-                    "If you alredy have an Account? ",
+                    "If you don't have an Account? ",
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 16,
@@ -91,11 +91,11 @@ class _SignUpPageState extends State<SignUpPage> {
                     onTap: () {
                       Navigator.pushAndRemoveUntil(
                           context,
-                          MaterialPageRoute(builder: (builder) => SignInPage()),
+                          MaterialPageRoute(builder: (builder) => SignUpPage()),
                           (route) => false);
                     },
                     child: const Text(
-                      "Login",
+                      "SignUp",
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 16,
@@ -104,6 +104,22 @@ class _SignUpPageState extends State<SignUpPage> {
                     ),
                   ),
                 ],
+              ),
+              const SizedBox(
+                height: 5,
+              ),
+               TextButton(
+                 onPressed: (){
+                  Navigator.push(context, MaterialPageRoute(builder: (context)=> const ForgotPasswordPage()));
+                 },
+                child: const Text(
+                    "Forgot Password?",
+                  style:  TextStyle(
+                    color: Colors.white,
+                    fontSize: 16,
+                    fontWeight: FontWeight.w600,
+                  ),
+                )
               ),
             ],
           ),
@@ -115,22 +131,15 @@ class _SignUpPageState extends State<SignUpPage> {
   Widget colorButton() {
     return InkWell(
       onTap: () async {
-        setState(() {
-          circular = true;
-        });
         try {
           firebase_auth.UserCredential userCredential =
-              await firebaseAuth.createUserWithEmailAndPassword(
+              await firebaseAuth.signInWithEmailAndPassword(
                   email: _emailController.text, password: _pwdController.text);
-             await userCredential.user?.sendEmailVerification();
           print(userCredential.user?.email);
           setState(() {
             circular = false;
           });
-          Navigator.pushAndRemoveUntil(
-              context,
-              MaterialPageRoute(builder: (builder) =>  VerifyPage()),
-              (route) => false);
+         getToHomePage();
         } catch (e) {
           final snackbar = SnackBar(content: Text(e.toString()));
           ScaffoldMessenger.of(context).showSnackBar(snackbar);
@@ -154,7 +163,7 @@ class _SignUpPageState extends State<SignUpPage> {
           child: circular
               ? CircularProgressIndicator()
               : const Text(
-                  "Sign Up",
+                  "Sign In",
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 20,
@@ -244,7 +253,10 @@ class _SignUpPageState extends State<SignUpPage> {
     );
   }
 
-  Future<void> sendEmailLink() async{
-
+  void getToHomePage(){
+    Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(builder: (builder) => HomePage()),
+            (route) => false);
   }
 }

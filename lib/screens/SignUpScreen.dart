@@ -1,22 +1,21 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter_sport_enthusiast/Service/Auth_Service.dart';
-import 'package:flutter_sport_enthusiast/pages/ForgotPwdPage.dart';
-import 'package:flutter_sport_enthusiast/pages/SignUpPage.dart';
+import 'package:flutter_sport_enthusiast/screens/HomeScreen.dart';
+import 'package:flutter_sport_enthusiast/screens/PhoneScreen.dart';
+import 'package:flutter_sport_enthusiast/screens/SignInScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:firebase_auth/firebase_auth.dart' as firebase_auth;
 
-import 'HomePage.dart';
-import 'PhoneAuth.dart';
+import 'VerifyScreen.dart';
 
-class SignInPage extends StatefulWidget {
-  const SignInPage({Key? key}) : super(key: key);
+class SignUpPage extends StatefulWidget {
+  const SignUpPage({Key? key}) : super(key: key);
 
   @override
-  _SignInPageState createState() => _SignInPageState();
+  _SignUpPageState createState() => _SignUpPageState();
 }
 
-class _SignInPageState extends State<SignInPage> {
+class _SignUpPageState extends State<SignUpPage> {
   firebase_auth.FirebaseAuth firebaseAuth = firebase_auth.FirebaseAuth.instance;
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _pwdController = TextEditingController();
@@ -35,7 +34,7 @@ class _SignInPageState extends State<SignInPage> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               const Text(
-                "Sign In",
+                "Sign Up",
                 style: TextStyle(
                   fontSize: 35,
                   color: Colors.white,
@@ -45,8 +44,9 @@ class _SignInPageState extends State<SignInPage> {
               const SizedBox(
                 height: 20,
               ),
-              buttonItem("assets/google.svg", "Continue with Google", 25, () {
-                authClass.googleSignIn(context);
+              buttonItem("assets/google.svg", "Continue with Google", 25,
+                  () async {
+                await authClass.googleSignIn(context);
               }),
               const SizedBox(
                 height: 15,
@@ -81,7 +81,7 @@ class _SignInPageState extends State<SignInPage> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   const Text(
-                    "If you don't have an Account? ",
+                    "If you alredy have an Account? ",
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 16,
@@ -91,11 +91,11 @@ class _SignInPageState extends State<SignInPage> {
                     onTap: () {
                       Navigator.pushAndRemoveUntil(
                           context,
-                          MaterialPageRoute(builder: (builder) => SignUpPage()),
+                          MaterialPageRoute(builder: (builder) => const SignInPage()),
                           (route) => false);
                     },
                     child: const Text(
-                      "SignUp",
+                      "Login",
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 16,
@@ -104,22 +104,6 @@ class _SignInPageState extends State<SignInPage> {
                     ),
                   ),
                 ],
-              ),
-              const SizedBox(
-                height: 5,
-              ),
-               TextButton(
-                 onPressed: (){
-                  Navigator.push(context, MaterialPageRoute(builder: (context)=> const ForgotPasswordPage()));
-                 },
-                child: const Text(
-                    "Forgot Password?",
-                  style:  TextStyle(
-                    color: Colors.white,
-                    fontSize: 16,
-                    fontWeight: FontWeight.w600,
-                  ),
-                )
               ),
             ],
           ),
@@ -131,15 +115,22 @@ class _SignInPageState extends State<SignInPage> {
   Widget colorButton() {
     return InkWell(
       onTap: () async {
+        setState(() {
+          circular = true;
+        });
         try {
           firebase_auth.UserCredential userCredential =
-              await firebaseAuth.signInWithEmailAndPassword(
+              await firebaseAuth.createUserWithEmailAndPassword(
                   email: _emailController.text, password: _pwdController.text);
+             await userCredential.user?.sendEmailVerification();
           print(userCredential.user?.email);
           setState(() {
             circular = false;
           });
-         getToHomePage();
+          Navigator.pushAndRemoveUntil(
+              context,
+              MaterialPageRoute(builder: (builder) =>  VerifyPage()),
+              (route) => false);
         } catch (e) {
           final snackbar = SnackBar(content: Text(e.toString()));
           ScaffoldMessenger.of(context).showSnackBar(snackbar);
@@ -163,7 +154,7 @@ class _SignInPageState extends State<SignInPage> {
           child: circular
               ? CircularProgressIndicator()
               : const Text(
-                  "Sign In",
+                  "Sign Up",
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 20,
@@ -175,7 +166,7 @@ class _SignInPageState extends State<SignInPage> {
   }
 
   Widget buttonItem(
-      String imagepath, String buttonName, double size, VoidCallback onTap) {
+      String imagePath, String buttonName, double size, VoidCallback onTap) {
     return InkWell(
       onTap: onTap,
       child: Container(
@@ -195,7 +186,7 @@ class _SignInPageState extends State<SignInPage> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               SvgPicture.asset(
-                imagepath,
+                imagePath,
                 height: size,
                 width: size,
               ),
@@ -217,7 +208,7 @@ class _SignInPageState extends State<SignInPage> {
   }
 
   Widget textItem(
-      String labeltext, TextEditingController controller, bool obscureText) {
+      String labelText, TextEditingController controller, bool obscureText) {
     return Container(
       width: MediaQuery.of(context).size.width - 70,
       height: 55,
@@ -229,7 +220,7 @@ class _SignInPageState extends State<SignInPage> {
           color: Colors.white,
         ),
         decoration: InputDecoration(
-          labelText: labeltext,
+          labelText: labelText,
           labelStyle: const TextStyle(
             fontSize: 17,
             color: Colors.white,
@@ -253,10 +244,7 @@ class _SignInPageState extends State<SignInPage> {
     );
   }
 
-  void getToHomePage(){
-    Navigator.pushAndRemoveUntil(
-        context,
-        MaterialPageRoute(builder: (builder) => HomePage()),
-            (route) => false);
+  Future<void> sendEmailLink() async{
+
   }
 }

@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart' as firebase_auth;
-import 'package:flutter_sport_enthusiast/pages/HomePage.dart';
+import 'package:flutter_sport_enthusiast/screens/HomeScreen.dart';
 
 class VerifyPage extends StatefulWidget {
   const VerifyPage({Key? key}) : super(key: key);
