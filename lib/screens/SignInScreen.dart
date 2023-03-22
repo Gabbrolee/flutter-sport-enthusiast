@@ -43,12 +43,6 @@ class _SignInPageState extends State<SignInPage> {
                 ),
               ),
               const SizedBox(
-                height: 20,
-              ),
-              buttonItem("assets/google.svg", "Continue with Google", 25, () {
-                authClass.googleSignIn(context);
-              }),
-              const SizedBox(
                 height: 15,
               ),
               buttonItem("assets/phone.svg", "Continue with Mobile", 30, () {
