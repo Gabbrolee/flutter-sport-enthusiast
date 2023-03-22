@@ -1,4 +1,5 @@
 import 'package:flutter_sport_enthusiast/Service/Auth_Service.dart';
+import 'package:flutter_sport_enthusiast/data/models/user_model.dart';
 import 'package:flutter_sport_enthusiast/screens/HomeScreen.dart';
 import 'package:flutter_sport_enthusiast/screens/PhoneScreen.dart';
 import 'package:flutter_sport_enthusiast/screens/SignInScreen.dart';
@@ -6,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:firebase_auth/firebase_auth.dart' as firebase_auth;
 
+import '../data/remote_data_source/firestore_helper.dart';
 import 'VerifyScreen.dart';
 
 class SignUpPage extends StatefulWidget {
@@ -19,6 +21,9 @@ class _SignUpPageState extends State<SignUpPage> {
   firebase_auth.FirebaseAuth firebaseAuth = firebase_auth.FirebaseAuth.instance;
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _pwdController = TextEditingController();
+  final TextEditingController _userNameController = TextEditingController();
+  final TextEditingController _phoneNoController = TextEditingController();
+
   bool circular = false;
   AuthClass authClass = AuthClass();
 
@@ -65,7 +70,15 @@ class _SignUpPageState extends State<SignUpPage> {
               const SizedBox(
                 height: 18,
               ),
+              textItem("Username....", _userNameController, false),
+              const SizedBox(
+                height: 18,
+              ),
               textItem("Email....", _emailController, false),
+              const SizedBox(
+                height: 18,
+              ),
+              textItem("Phone....", _phoneNoController, false),
               const SizedBox(
                 height: 15,
               ),
@@ -123,13 +136,24 @@ class _SignUpPageState extends State<SignUpPage> {
               await firebaseAuth.createUserWithEmailAndPassword(
                   email: _emailController.text, password: _pwdController.text);
              await userCredential.user?.sendEmailVerification();
+
+             FirestoreHelper.create(UserModel(
+                 email: _emailController.text,
+                 password: _pwdController.text,
+                 phoneNo: _phoneNoController.text,
+                 userName: _userNameController.text
+             ));
+
           print(userCredential.user?.email);
           setState(() {
             circular = false;
           });
           Navigator.pushAndRemoveUntil(
               context,
-              MaterialPageRoute(builder: (builder) =>  VerifyPage()),
+              MaterialPageRoute(builder: (builder) =>  VerifyPage(
+                userName: _userNameController.text,
+                interest: [],
+                phoneNo: _phoneNoController.text,)),
               (route) => false);
         } catch (e) {
           final snackbar = SnackBar(content: Text(e.toString()));

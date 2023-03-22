@@ -12,7 +12,7 @@ class _DiscoveriesScreenState extends State<DiscoveriesScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        child: const Text("Discoveries Screen"),
+        child: const Center(child: Text("Discoveries Screen")),
       ),
     );
   }

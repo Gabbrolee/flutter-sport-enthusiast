@@ -5,7 +5,10 @@ import 'package:firebase_auth/firebase_auth.dart' as firebase_auth;
 import 'package:flutter_sport_enthusiast/screens/HomeScreen.dart';
 
 class VerifyPage extends StatefulWidget {
-  const VerifyPage({Key? key}) : super(key: key);
+   VerifyPage({Key? key, required this.interest, required this.phoneNo, required this.userName}) : super(key: key);
+  List interest;
+  String phoneNo;
+  String userName;
 
   @override
   State<VerifyPage> createState() => _VerifyPageState();
@@ -24,7 +27,6 @@ class _VerifyPageState extends State<VerifyPage> {
     _user?.sendEmailVerification();
     timer = Timer.periodic(const Duration(seconds: 60), (timer) {
       checkEmailVerify();
-
     });
     super.initState();
   }
@@ -51,7 +53,7 @@ class _VerifyPageState extends State<VerifyPage> {
     await _user?.reload();
     if(_user!.emailVerified){
       timer.cancel();
-     Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> HomePage()));
+     Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> HomePage(username: widget.userName, phoneNo: widget.phoneNo,)));
     }
   }
 }

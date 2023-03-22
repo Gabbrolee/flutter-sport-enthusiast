@@ -9,8 +9,9 @@ import 'bottom_nav_screens/profile_screen.dart';
 import 'bottom_nav_screens/setting_screen.dart';
 
 class HomePage extends StatefulWidget {
-  HomePage({Key? key}) : super(key: key);
-
+  HomePage({Key? key, this.phoneNo, this.username}) : super(key: key);
+  String? username;
+  String? phoneNo;
   @override
   _HomePageState createState() => _HomePageState();
 }
@@ -20,44 +21,47 @@ class _HomePageState extends State<HomePage> {
   int index = 0;
   final navigationKey = GlobalKey<CurvedNavigationBarState>();
 
+  String username = "";
+  String phoneNo = '';
+
+
+
   List<Widget> items = [
-    const Icon(Icons.account_circle, size: 30,),
-    const Icon(Icons.person_2, size: 30,),
-    const Icon(Icons.cached_rounded, size: 30,),
-    const Icon(Icons.settings, size: 30,),
+    const Icon(
+      Icons.account_circle,
+      size: 30,
+    ),
+    const Icon(
+      Icons.person_2,
+      size: 30,
+    ),
+    const Icon(
+      Icons.cached_rounded,
+      size: 30,
+    ),
+    const Icon(
+      Icons.settings,
+      size: 30,
+    ),
   ];
 
+  @override
+  void initState() {
+    super.initState();
+    username = widget.username ?? '';
+    phoneNo = widget.phoneNo ?? '';
+  }
+
   final screens = [
-    ProfileScreen(username: '', interest: [], phoneNumber: '',),
+    ProfileScreen(
+      username: "",
+      interest: [],
+      phoneNumber: '',
+    ),
     const BuddiesScreen(),
     const DiscoveriesScreen(),
     const SettingScreen()
   ];
-  // @override
-  // Widget build(BuildContext context) {
-  //   // return Scaffold(
-  //   //   // appBar: AppBar(
-  //   //   //   title: const Text('Home'),
-  //   //   //   centerTitle: true,
-  //   //   //   // actions: [
-  //   //   //   //   IconButton(
-  //   //   //   //       icon: Icon(Icons.logout),
-  //   //   //   //       onPressed: () async {
-  //   //   //   //         await authClass.signOut(context);
-  //   //   //   //         Navigator.pushAndRemoveUntil(
-  //   //   //   //             context,
-  //   //   //   //             MaterialPageRoute(builder: (builder) => MyApp()),
-  //   //   //   //             (route) => false);
-  //   //   //   //       }),
-  //   //   //   // ],
-  //   //   // ),
-  //   //
-  //   //
-  //   //
-  //   //
-  //   // );
-  //
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -66,14 +70,10 @@ class _HomePageState extends State<HomePage> {
       child: ClipRect(
         child: Scaffold(
           extendBody: true,
-          // appBar: AppBar(
-          //   title: const Text("Home"),
-          // ),
           body: screens[index],
           bottomNavigationBar: Theme(
-            data: Theme.of(context).copyWith(
-                iconTheme: const IconThemeData(color: Colors.white)
-            ),
+            data: Theme.of(context)
+                .copyWith(iconTheme: const IconThemeData(color: Colors.white)),
             child: CurvedNavigationBar(
                 key: navigationKey,
                 color: Colors.blue,
@@ -84,10 +84,9 @@ class _HomePageState extends State<HomePage> {
                 items: items,
                 height: 60,
                 index: index,
-                onTap: (index)=> setState(() {
-                  this.index = index;
-                })
-            ),
+                onTap: (index) => setState(() {
+                      this.index = index;
+                    })),
           ),
         ),
       ),

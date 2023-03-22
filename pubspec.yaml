@@ -42,6 +42,19 @@ dependencies:
   google_sign_in: ^6.0.2
   flutter_secure_storage: ^8.0.0
   otp_text_field: ^1.1.1
+  curved_navigation_bar: ^1.0.3
+  shared_preferences: ^2.0.18
+  google_fonts: ^4.0.3
+  toast: ^0.3.0
+  page_transition: ^2.0.9
+  cloud_firestore: ^4.4.5
+  font_awesome_flutter: ^10.4.0
+  eva_icons_flutter: ^3.1.0
+  image_picker: ^0.8.7
+  firebase_storage: ^11.0.16
+  get: ^4.6.5
+
+
 
 dev_dependencies:
   flutter_test:

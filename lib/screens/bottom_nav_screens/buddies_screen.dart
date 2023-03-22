@@ -12,7 +12,7 @@ class _BuddiesScreenState extends State<BuddiesScreen>{
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        child: Text("Buddies"),
+        child: const Center(child: Text("Buddies")),
       ),
     );
   }

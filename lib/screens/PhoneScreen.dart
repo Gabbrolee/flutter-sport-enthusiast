@@ -2,9 +2,11 @@ import 'dart:async';
 
 import 'package:flutter_sport_enthusiast/Service/Auth_Service.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_sport_enthusiast/data/models/user_model.dart';
 import 'package:otp_text_field/otp_field.dart';
 import 'package:otp_text_field/otp_field_style.dart';
 import 'package:otp_text_field/style.dart';
+import '../data/remote_data_source/firestore_helper.dart';
 
 class PhoneAuthPage extends StatefulWidget {
   PhoneAuthPage({Key? key}) : super(key: key);
@@ -201,6 +203,12 @@ class _PhoneAuthPageState extends State<PhoneAuthPage> {
                     });
                     await authClass.verifyPhoneNumber(
                         "$countryCode${phoneController.text}", context, setData);
+                    FirestoreHelper.create(UserModel(
+                        email: '',
+                        password: '',
+                        phoneNo: phoneController.text,
+                        userName: ''
+                    ));
                   },
             child: Padding(
               padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 15),

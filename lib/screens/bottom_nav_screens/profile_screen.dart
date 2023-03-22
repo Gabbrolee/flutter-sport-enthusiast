@@ -408,15 +408,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     });
   }
 
-  // uploadimage() async {
-  //   String fileName = basename(image.path); //Get File Name - Or set one
-  //   Reference firebaseStorageRef =
-  //   FirebaseStorage.instance.ref().child('uploads/$fileName');
-  //   TaskSnapshot uploadTask =
-  //   await firebaseStorageRef.putFile(File(image.path));
-  //   String url = await uploadTask.ref.getDownloadURL();
-  //   return url;
-  // }
+
 
   @override
   Widget build(BuildContext context) {
